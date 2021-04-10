@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_daterange"
+        android:icon="@drawable/ic_baseline_date_range_24"
+        android:title="Date range"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_online"
+        android:icon="@drawable/ic_baseline_tune_24"
+        android:title="Online payment"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_wallet"
+        android:icon="@drawable/ic_baseline_tune_24"
+        android:title="Wallet payment"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_cod"
+        android:icon="@drawable/ic_baseline_tune_24"
+        android:title="Cash on delivery"
+        app:showAsAction="never" />
+
+</menu>
