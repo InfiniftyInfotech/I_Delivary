@@ -2,8 +2,9 @@ package com.example.i_delivery.utils.local_db;
 
 import android.content.Context;
 
-import com.example.i_delivery.data.model.Order;
+import com.example.i_delivery.model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;

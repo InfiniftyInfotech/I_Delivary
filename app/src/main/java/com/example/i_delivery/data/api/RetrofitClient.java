@@ -17,7 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend/androidapi/";
+//    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend/androidapi/";
+    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend-fortest/androidapi/";
 
     public static Retrofit getRetrofitInstance() {
         Gson gson = new GsonBuilder()
@@ -33,9 +34,6 @@ public class RetrofitClient {
                     .build();
         }
         return retrofit;
-
-        // infoinfinfotech@gmail.com
-        // infinityinfotech
     }
 
     public static OkHttpClient.Builder getUnsafeOkHttpClient() {

@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.i_delivery.utils.local_db.PrefClient;
-import com.example.i_delivery.view.LoginActivity;
+import com.example.i_delivery.ui.DashboardActivity;
+import com.example.i_delivery.ui.LoginActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -35,7 +36,6 @@ public class Utils {
 
         }
     }
-
 
     public static void showAlert(Context context, String msg){
         new MaterialAlertDialogBuilder(context)

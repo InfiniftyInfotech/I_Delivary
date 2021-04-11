@@ -11,19 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.I_Delivery"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.DetailsActivity"></activity>
+        <activity android:name=".ui.OrderDetailsActivity"></activity>
         <activity
-            android:name=".view.DashboardActivity"
+            android:name=".ui.DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.DeliveryActivity"
+            android:name=".ui.OrderListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.I_Delivery.NoActionBar" />
         <activity
-            android:name=".view.LauncherActivity"
+            android:name=".ui.LauncherActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.I_Delivery.NoActionBar">
             <intent-filter>
