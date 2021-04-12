@@ -113,11 +113,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean _isValid() {
 
-        //valueName = etName.getText().toString();
-        //valuePass = etPass.getText().toString();
+        valueName = etName.getText().toString();
+        valuePass = etPass.getText().toString();
 
-        valueName = "Ibrahim";
-        valuePass = "I123456m";
+        // valueName = "Ibrahim";
+        // valuePass = "I123456m";
 
         if (TextUtils.isEmpty(valueName)) {
             etName.setError("Can't be empty");

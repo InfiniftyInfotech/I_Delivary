@@ -10,8 +10,8 @@ public class AllOrderResponse {
     private List<User> user_details = new ArrayList<>();
     private List<Order> order_list = new ArrayList<>();
     private List<Order> success_list = new ArrayList<>();
+    private List<Order> partdelivery_list = new ArrayList<>();
     private List<Order> full_list = new ArrayList<>();
-
 
     public String getToken() {
         return token;
@@ -23,6 +23,7 @@ public class AllOrderResponse {
 
     public List<Order> getFull_list() {
         full_list.addAll(order_list);
+        full_list.addAll(partdelivery_list);
         full_list.addAll(success_list);
         return full_list;
     }
@@ -71,16 +72,13 @@ public class AllOrderResponse {
         this.success_list = success_list;
     }
 
-    @Override
-    public String toString() {
-        return "DataModel{" +
-                "response=" + response +
-                ", message='" + message + '\'' +
-                ", token='" + token + '\'' +
-                ", user_details=" + user_details +
-                ", order_list=" + order_list +
-                ", success_list=" + success_list +
-                ", full_list=" + full_list +
-                '}';
+    public List<Order> getPartdelivery_list() {
+        return partdelivery_list;
     }
+
+    public void setPartdelivery_list(List<Order> partdelivery_list) {
+        this.partdelivery_list = partdelivery_list;
+    }
+
+
 }

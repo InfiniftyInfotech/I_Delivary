@@ -2,6 +2,7 @@ package com.example.i_delivery.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -18,12 +19,13 @@ import com.example.i_delivery.data.api.RetrofitClient;
 import com.example.i_delivery.data.api.RetrofitInterface;
 import com.example.i_delivery.model.SingleOrderResponse;
 import com.example.i_delivery.ui.adapter.AdapterProduct;
+import com.example.i_delivery.viewmodel.DataViewModel;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "DetailsActivity";
     private AdapterProduct adapterProduct;
-    private String order_id;
+    private String order_id, part_deliveryid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
         //
         order_id = getIntent().getStringExtra("order_id");
+        part_deliveryid = getIntent().getStringExtra("part_deliveryid");
         //
 
         RecyclerView rvProduct = findViewById(R.id.rvProduct);
@@ -43,34 +46,55 @@ public class OrderDetailsActivity extends AppCompatActivity {
         rvProduct.setAdapter(adapterProduct);
         rvProduct.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        _getProduct();
-
+        if (part_deliveryid != null){
+            _getPartOrderDetails();
+        } else {
+            _getOrderDetails();
+        }
 
     }
 
-    private void _getProduct() {
-        SingleOrderResponse response = new SingleOrderResponse();
-        response.setOrder_id(order_id);
-        RetrofitClient.getRetrofitInstance().create(RetrofitInterface.class)
-                .getOrderedDetails(response)
-                .enqueue(new Callback<SingleOrderResponse>() {
-                    @Override
-                    public void onResponse(Call<SingleOrderResponse> call, Response<SingleOrderResponse> response) {
-                        Log.d(TAG, "onResponse: " + response.body());
-                        if (response.body() == null) {
-                            Toast.makeText(OrderDetailsActivity.this, "Error in database.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (response.body().getResponse() == 200) {
-                            //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                            adapterProduct.setProductList(response.body().getResult());
-                        }
+    private void _getPartOrderDetails() {
+        SingleOrderResponse singleOrderResponse = new SingleOrderResponse();
+        singleOrderResponse.setOrder_id(order_id);
+        singleOrderResponse.setPart_deliveryid(part_deliveryid);
 
+        DataViewModel dataViewModel = new DataViewModel();
+        dataViewModel.getPartOrderDetails(singleOrderResponse)
+                .observe(this, new Observer<SingleOrderResponse>() {
+                    @Override
+                    public void onChanged(SingleOrderResponse singleOrderResponse) {
+                        if (singleOrderResponse != null){
+                            if (singleOrderResponse.getResponse() == 200){
+                                adapterProduct.setProductList(singleOrderResponse.getResult());
+                            }else {
+                                Toast.makeText(OrderDetailsActivity.this, "An error occurred! try again.", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(OrderDetailsActivity.this, "An error occurred! try again.", Toast.LENGTH_LONG).show();
+                        }
                     }
+                });
+    }
 
+    private void _getOrderDetails() {
+        SingleOrderResponse singleOrderResponse = new SingleOrderResponse();
+        singleOrderResponse.setOrder_id(order_id);
+
+        DataViewModel dataViewModel = new DataViewModel();
+        dataViewModel.getOrderDetails(singleOrderResponse)
+                .observe(this, new Observer<SingleOrderResponse>() {
                     @Override
-                    public void onFailure(Call<SingleOrderResponse> call, Throwable t) {
-
+                    public void onChanged(SingleOrderResponse singleOrderResponse) {
+                        if (singleOrderResponse != null){
+                            if (singleOrderResponse.getResponse() == 200){
+                                adapterProduct.setProductList(singleOrderResponse.getResult());
+                            }else {
+                                Toast.makeText(OrderDetailsActivity.this, "An error occurred! try again.", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(OrderDetailsActivity.this, "An error occurred! try again.", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
     }

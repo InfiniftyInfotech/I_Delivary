@@ -17,11 +17,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-//    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend/androidapi/";
-    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend-fortest/androidapi/";
+    private static final String BASE_URL = "https://infinitynetworkmarketing.com/infinity-backend/androidapi/";
+//    private static final String BASE_URL = "https://infinitynetworkmarketing.com/androied-backend-fortest/androidapi/";
 
     public static Retrofit getRetrofitInstance() {
         Gson gson = new GsonBuilder()
+                .setLenient()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
 

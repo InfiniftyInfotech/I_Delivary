@@ -6,7 +6,15 @@ public class SingleOrderResponse {
     List<Product> result;
     String message;
     int response;
-    String order_id;
+    String order_id, part_deliveryid;
+
+    public String getPart_deliveryid() {
+        return part_deliveryid;
+    }
+
+    public void setPart_deliveryid(String part_deliveryid) {
+        this.part_deliveryid = part_deliveryid;
+    }
 
     public String getOrder_id() {
         return order_id;
@@ -50,7 +58,15 @@ public class SingleOrderResponse {
     }
 
     public class Product{
-        private String code, product_name, qty, price, photo, attribute;
+        private String code, product_name, qty, delivery_qty, price, photo, attribute;
+
+        public String getDelivery_qty() {
+            return delivery_qty;
+        }
+
+        public void setDelivery_qty(String delivery_qty) {
+            this.delivery_qty = delivery_qty;
+        }
 
         public String getCode() {
             return code;
@@ -106,6 +122,7 @@ public class SingleOrderResponse {
                     "code='" + code + '\'' +
                     ", product_name='" + product_name + '\'' +
                     ", qty='" + qty + '\'' +
+                    ", delivery_qty='" + delivery_qty + '\'' +
                     ", price='" + price + '\'' +
                     ", photo='" + photo + '\'' +
                     ", attribute='" + attribute + '\'' +

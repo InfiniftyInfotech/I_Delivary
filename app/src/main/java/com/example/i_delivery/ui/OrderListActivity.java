@@ -176,6 +176,9 @@ public class OrderListActivity extends AppCompatActivity {
                             case "history":
                                 orders.addAll(allOrderResponse.getFull_list());
                                 break;
+                            case "partial":
+                                orders.addAll(allOrderResponse.getPartdelivery_list());
+                                break;
                         }
 
                         // save to local for further use

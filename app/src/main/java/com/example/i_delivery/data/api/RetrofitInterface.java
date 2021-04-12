@@ -17,10 +17,16 @@ public interface RetrofitInterface {
     @POST ("requestDeliveryOrder")
     Call<AllOrderResponse> sendOrderToDelivery(@Body Order order);
 
+    @POST ("requestPartDeliveryOrder")
+    Call<AllOrderResponse> sendPartOrderToDelivery(@Body Order order);
+
     @POST ("otp_request")
     Call<AllOrderResponse> requestOTP(@Body User user);
 
     @POST ("getOrderedDetails")
-    Call<SingleOrderResponse> getOrderedDetails(@Body SingleOrderResponse singleOrderResponse);
+    Call<SingleOrderResponse> getOrderDetails(@Body SingleOrderResponse singleOrderResponse);
+
+    @POST ("getPrductByPartOrders")
+    Call<SingleOrderResponse> getPartOrderDetails(@Body SingleOrderResponse singleOrderResponse);
 
 }

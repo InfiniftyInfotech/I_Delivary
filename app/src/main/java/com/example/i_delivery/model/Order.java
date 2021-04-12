@@ -9,10 +9,26 @@ public class Order extends RealmObject {
     @PrimaryKey
     private String orderid;
     private String otpcode;
-    private String id, userid, fullname, mobile, email, address, products, payment_type, order_type, change_order_type, signature, remark;
-    private double totalamount;
+    private String id, userid, part_deliveryid, fullname, mobile, email, address, products, payment_type, order_type, change_order_type, signature, remark;
+    private double totalamount, this_deliveryprice;
     private Date entrydate;
     private String token;
+
+    public String getPart_deliveryid() {
+        return part_deliveryid;
+    }
+
+    public void setPart_deliveryid(String part_deliveryid) {
+        this.part_deliveryid = part_deliveryid;
+    }
+
+    public double getThis_deliveryprice() {
+        return this_deliveryprice;
+    }
+
+    public void setThis_deliveryprice(double this_deliveryprice) {
+        this.this_deliveryprice = this_deliveryprice;
+    }
 
     public String getToken() {
         return token;
@@ -160,17 +176,19 @@ public class Order extends RealmObject {
                 ", otpcode='" + otpcode + '\'' +
                 ", id='" + id + '\'' +
                 ", userid='" + userid + '\'' +
+                ", part_deliveryid='" + part_deliveryid + '\'' +
                 ", fullname='" + fullname + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-              //  ", products='" + products + '\'' +
+                ", products='" + products + '\'' +
                 ", payment_type='" + payment_type + '\'' +
                 ", order_type='" + order_type + '\'' +
                 ", change_order_type='" + change_order_type + '\'' +
-              //  ", signature='" + signature + '\'' +
+                ", signature='" + signature + '\'' +
                 ", remark='" + remark + '\'' +
                 ", totalamount=" + totalamount +
+                ", this_deliveryprice=" + this_deliveryprice +
                 ", entrydate=" + entrydate +
                 ", token='" + token + '\'' +
                 '}';

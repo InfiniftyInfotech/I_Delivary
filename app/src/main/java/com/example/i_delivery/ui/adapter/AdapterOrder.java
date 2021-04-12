@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,7 @@ public class AdapterOrder extends RecyclerView.Adapter<AdapterOrder.DeliveryView
 
         holder.tvOrderId.setText("Order Id - " + order.getOrderid());
         holder.tvOrderDate.setText("Date - " + new SimpleDateFormat("dd MMM yyyy").format(order.getEntrydate()));
-        holder.tvTotalPrice.setText("Tk " + order.getTotalamount());
+        holder.tvTotalPrice.setText("Tk " + (order.getPart_deliveryid() != null ? order.getThis_deliveryprice() : order.getTotalamount()));
         holder.tvPaymentType.setText("Payment type - " + order.getPayment_type());
         holder.tvFullName.setText("Name - " + order.getFullname());
         holder.tvMobile.setText("Cell - " + order.getMobile());
@@ -145,6 +146,7 @@ public class AdapterOrder extends RecyclerView.Adapter<AdapterOrder.DeliveryView
 
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
                 intent.putExtra("order_id", order.getOrderid());
+                intent.putExtra("part_deliveryid", order.getPart_deliveryid());
                 context.startActivity(intent);
 
             }
@@ -248,22 +250,44 @@ public class AdapterOrder extends RecyclerView.Adapter<AdapterOrder.DeliveryView
 
     private void _sendOrderToDelivery(Order order) {
         order.setToken(new PrefClient(context).getToken());
+
+        Log.d(TAG, "_sendOrderToDelivery: token = " + order.getToken());
+
         DataViewModel dataViewModel = new DataViewModel();
-        dataViewModel.sendOrderToDelivery(order).observe((LifecycleOwner) context, new Observer<AllOrderResponse>() {
-            @Override
-            public void onChanged(AllOrderResponse allOrderResponse) {
-                if (allOrderResponse != null) {
-                    if (allOrderResponse.getResponse() == 200) {
-                        listener.OnItemClick(order, -1);
-                        showAlert(context, allOrderResponse.getMessage());
+
+        if (order.getPart_deliveryid()!=null){
+            dataViewModel.sendPartOrderToDelivery(order).observe((LifecycleOwner) context, new Observer<AllOrderResponse>() {
+                @Override
+                public void onChanged(AllOrderResponse allOrderResponse) {
+                    if (allOrderResponse != null) {
+                        if (allOrderResponse.getResponse() == 200) {
+                            listener.OnItemClick(order, -1);
+                            showAlert(context, allOrderResponse.getMessage());
+                        } else {
+                            showAlert(context, allOrderResponse.getMessage());
+                        }
                     } else {
-                        showAlert(context, allOrderResponse.getMessage());
+                        Toast.makeText(context, "An error occurred! try again.", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(context, "An error occurred! try again.", Toast.LENGTH_LONG).show();
                 }
-            }
-        });
+            });
+        } else {
+            dataViewModel.sendOrderToDelivery(order).observe((LifecycleOwner) context, new Observer<AllOrderResponse>() {
+                @Override
+                public void onChanged(AllOrderResponse allOrderResponse) {
+                    if (allOrderResponse != null) {
+                        if (allOrderResponse.getResponse() == 200) {
+                            listener.OnItemClick(order, -1);
+                            showAlert(context, allOrderResponse.getMessage());
+                        } else {
+                            showAlert(context, allOrderResponse.getMessage());
+                        }
+                    } else {
+                        Toast.makeText(context, "An error occurred! try again.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 
     public static Bitmap convert(String base64Str) throws IllegalArgumentException {

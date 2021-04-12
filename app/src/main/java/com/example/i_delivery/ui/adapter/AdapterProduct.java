@@ -52,7 +52,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ProductV
         holder.code.setText("Code: " + product.getCode());
         holder.name.setText("Name: " + product.getProduct_name());
         holder.price.setText("Price: TK " + product.getPrice() + "");
-        holder.count.setText("Qty: " + product.getQty());
+        holder.count.setText(product.getDelivery_qty() != null ? "Qty: " + product.getDelivery_qty() : "Qty: " + product.getQty());
         holder.attr.setText("Attribute: " + product.getAttribute());
 
     }

@@ -34,7 +34,7 @@ import org.sumon.eagleeye.OnChangeConnectivityListener;
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "DashboardActivity";
-    private CardView btnPending, btnSuccess, btnHistory;
+    private CardView btnPending, btnSuccess, btnHistory, btnPartial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         btnSuccess.setOnClickListener(this);
         btnHistory = findViewById(R.id.btnHistory);
         btnHistory.setOnClickListener(this);
+        btnPartial = findViewById(R.id.btnPartialDelivery);
+        btnPartial.setOnClickListener(this);
 
         ImageView fabProfile = findViewById(R.id.fabProfile);
         Glide.with(this)
@@ -134,12 +136,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void onChanged(AllOrderResponse allOrderResponse) {
                 if (allOrderResponse != null) {
                     if (allOrderResponse.getResponse() == 200) {
-                        TextView badgeAll = findViewById(R.id.badgeAll);
-                        TextView badgeSuccess = findViewById(R.id.badgeSuccess);
                         TextView badgePending = findViewById(R.id.badgePending);
+                        TextView badgeSuccess = findViewById(R.id.badgeSuccess);
+                        TextView badgePartial = findViewById(R.id.badgePartial);
+                        TextView badgeAll = findViewById(R.id.badgeAll);
 
                         badgePending.setText(allOrderResponse.getOrder_list().size() + "");
                         badgeSuccess.setText(allOrderResponse.getSuccess_list().size() + "");
+                        badgePartial.setText(allOrderResponse.getPartdelivery_list().size() + "");
                         badgeAll.setText((allOrderResponse.getSuccess_list().size() + allOrderResponse.getOrder_list().size()) + "");
 
                     } else {
@@ -167,6 +171,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             case R.id.btnHistory:
                 startActivity(new Intent(DashboardActivity.this, OrderListActivity.class)
                         .putExtra("type", "history"));
+                break;
+            case R.id.btnPartialDelivery:
+                startActivity(new Intent(DashboardActivity.this, OrderListActivity.class)
+                        .putExtra("type", "partial"));
                 break;
         }
     }
